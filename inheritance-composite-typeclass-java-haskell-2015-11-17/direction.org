@@ -1,0 +1,12 @@
+#+TITLE: direction
+
+* interfaces vs typeclasses
+** ping with different protocols
+*** tcp
+*** udp
+* inheritance vs composite data types and pattern matching
+** good when a meaningful default exists
+** types of messages received in response
+*** success
+*** error
+*** info
