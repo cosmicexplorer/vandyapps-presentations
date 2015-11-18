@@ -1,3 +1,8 @@
+// -*- compile-command: "javac *.java" -*-
+// run with:
+// java main tcp
+// java main udp
+
 import java.net.*;
 
 public class main {

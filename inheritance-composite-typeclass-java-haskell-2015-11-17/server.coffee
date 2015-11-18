@@ -1,3 +1,6 @@
+# run with:
+# coffee server.coffee
+
 net = require 'net'
 dgram = require 'dgram'
 

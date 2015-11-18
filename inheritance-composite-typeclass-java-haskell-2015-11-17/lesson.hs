@@ -1,3 +1,8 @@
+-- -*- compile-command: "ghc *.hs -o lesson" -*-
+-- run with:
+-- ./lesson tcp
+-- ./lesson udp
+
 module Main where
 import qualified Network.Simple.TCP as TCP
 import qualified Network.Socket as SK
@@ -51,6 +56,7 @@ displayResult (SuccessResult s) = "SUCCESS: " ++ s
 displayResult (FailureResult s) = "FAILURE: " ++ s
 displayResult (InfoResult s) = "INFO: " ++ s
 
+-- boring implementation details
 msgMatcher = mkRegex "^(Success|Failure):\\s*"
 replaceResult s = subRegex msgMatcher s ""
 makeResult :: String -> PingResult
@@ -60,7 +66,6 @@ makeResult s
   | otherwise = InfoResult s
   where nonBegin = replaceResult s
 
--- boring implementation details
 data ArgException = ArgException deriving (Show)
 instance Exception ArgException
 
