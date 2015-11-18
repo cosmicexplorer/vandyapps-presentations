@@ -21,15 +21,22 @@ unpackRequest (Just s) = unpack s
 -- interfaces vs typeclasses
 class Pinger a where
   ping :: a -> IO String
+  -- interface functions can have default implementations!
+  -- better to think of as possibly-abstract base classes
+  -- if default implementation doesn't exist, all instances MUST implement
+  ping _ = do return "lol"
 
 data TCPPinger = TCPPinger {tcphost, tcpport, tcpmsg :: String} deriving Show
 
+-- note that implementation of a typeclass can happen after a type is defined!
 instance Pinger TCPPinger where
   ping pinger = TCP.connect (tcphost pinger) (tcpport pinger) $ \(sk, ad) -> do
     TCP.send sk $ pack $ tcpmsg pinger
     received <- TCP.recv sk sockByteLimit
     return $ unpackRequest received
 
+-- named accessors in haskell create new functions, which is why we can't just
+-- call these "host," "port," and "msg"
 data UDPPinger = UDPPinger {udphost, udpport, udpmsg :: String} deriving Show
 
 instance Pinger UDPPinger where
@@ -51,6 +58,8 @@ data PingResult =
   | FailureResult String
   | InfoResult String
 
+-- pattern matching
+-- this must be exhaustive or everything dies!
 displayResult :: PingResult -> String
 displayResult (SuccessResult s) = "SUCCESS: " ++ s
 displayResult (FailureResult s) = "FAILURE: " ++ s
