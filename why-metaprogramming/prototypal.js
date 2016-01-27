@@ -7,3 +7,5 @@ function filterOutZeros(array) {
 Array.prototype.filterOutZeros = function () {
   return filterOutZeros(this);
 };
+
+console.log([0, 1, 0, 2, 0, 3].filterOutZeros());
