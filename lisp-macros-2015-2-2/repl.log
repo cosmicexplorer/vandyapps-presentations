@@ -1,0 +1,238 @@
+CL-USER>
+;;; from intro.lisp
+CL-USER> (+ 2 3)
+5
+CL-USER>
+;;; from intro.lisp
+CL-USER> (/ 2 3)
+2/3
+CL-USER>
+;;; from intro.lisp
+CL-USER> (+ (/ 5 9) (/ 2 3))
+11/9
+;
+; compilation unit aborted
+;   caught 1 fatal ERROR condition
+CL-USER> (x-++ 3)
+4
+CL-USER>
+;;; from intro.lisp
+CL-USER> (list 1 2 3)
+(1 2 3)
+CL-USER> (list 1 2 3 "a")
+(1 2 3 "a")
+CL-USER> (list 1 2 3 "a" [1,2])
+; Evaluation aborted on #<SB-INT:SIMPLE-READER-ERROR "Comma not inside a backquote." {1004CA0563}>.
+CL-USER> (list 1 2 3 "a" #(1 2)))
+; Evaluation aborted on #<SB-INT:SIMPLE-READER-ERROR "unmatched close parenthesis" {1004E70B83}>.
+CL-USER> (defvar a 3)
+A
+CL-USER> a
+3
+CL-USER> (+ a 3)
+6
+; in: '+ 2
+;     ('+ 2 3)
+;
+; caught ERROR:
+;   illegal function call
+;
+; compilation unit finished
+;   caught 1 ERROR condition
+CL-USER>
+;;; from intro.lisp
+CL-USER> (list + 1 2 3)
+(NIL 1 2 3)
+CL-USER>
+;;; from intro.lisp
+CL-USER> (list + 1 2 3)
+(6 1 2 3)
+CL-USER>
+;;; from intro.lisp
+CL-USER> (list '+ 1 2 3)
+(+ 1 2 3)
+CL-USER>
+;;; from intro.lisp
+CL-USER> (+ 1 2 3)
+6
+CL-USER>
+;;; from intro.lisp
+CL-USER> (+ 1 2 3)
+6
+CL-USER>
+;;; from intro.lisp
+CL-USER> adkfjadk
+34
+CL-USER>
+;;; from intro.lisp
+CL-USER> (list adkfjadk 1 2 3)
+(34 1 2 3)
+CL-USER>
+;;; from intro.lisp
+CL-USER> (list '+ 1 2 3)
+(+ 1 2 3)
+CL-USER>
+;;; from intro.lisp
+CL-USER> (eval (list '+ 1 2 3))
+6
+CL-USER>
+;;; from intro.lisp
+CL-USER> (list + 1 2 3)
+((EVAL (LIST '+ 1 2 3)) 1 2 3)
+CL-USER>
+;;; from intro.lisp
+CL-USER> (list + 1 2 3)
+(6000000 1 2 3)
+CL-USER>
+;;; from intro.lisp
+CL-USER> (eval (list + 1 2 3))
+; in: (LIST + 1 2 3) 1
+;     ((LIST + 1 2 3) 1 2 3)
+;
+; caught ERROR:
+;   illegal function call
+;
+; compilation unit finished
+;   caught 1 ERROR condition
+; Evaluation aborted on #<SB-INT:COMPILED-PROGRAM-ERROR {1005B9D853}>.
+CL-USER>
+;;; from intro.lisp
+CL-USER> (read-from-string "(+ 1 2 3)")
+(+ 1 2 3)
+9
+CL-USER>
+;;; from intro.lisp
+CL-USER> (read-from-string "(+ 1 2 3)")
+(+ 1 2 3)
+9
+CL-USER>
+;;; from intro.lisp
+CL-USER> (setq l (read-from-string "(+ 1 2 3)"))
+; in: SETQ L
+;     (SETQ L (READ-FROM-STRING "(+ 1 2 3)"))
+;
+; caught WARNING:
+;   undefined variable: L
+;
+; compilation unit finished
+;   Undefined variable:
+;     L
+;   caught 1 WARNING condition
+(+ 1 2 3)
+CL-USER>
+;;; from intro.lisp
+CL-USER> (setq l (read-from-string "(+ 1 2 3)"))
+;
+; caught WARNING:
+;   undefined variable: L
+;
+; compilation unit finished
+;   Undefined variable:
+;     L
+;   caught 1 WARNING condition
+(+ 1 2 3)
+CL-USER>
+;;; from intro.lisp
+CL-USER> (defvar l)
+L
+CL-USER>
+;;; from intro.lisp
+CL-USER> (setq l (read-from-string "(+ 1 2 3)"))
+(+ 1 2 3)
+CL-USER>
+;;; from intro.lisp
+CL-USER> (eval l)
+6
+CL-USER>
+;;; from intro.lisp
+CL-USER> (lambda (x) (+ x 1))
+#<FUNCTION (LAMBDA (X)) {1002E38A2B}>
+CL-USER>
+;;; from intro.lisp
+CL-USER> ((lambda (x) (+ x 1)) 3)
+4
+CL-USER> "((lambda (x) (+ x 1)) 3)"
+"((lambda (x) (+ x 1)) 3)"
+CL-USER> (read-from-string "((lambda (x) (+ x 1)) 3)")
+((LAMBDA (X) (+ X 1)) 3)
+24
+CL-USER> (eval (read-from-string "((lambda (x) (+ x 1)) 3)"))
+4
+CL-USER> (loop (print (eval (read))))
+(+ 1 2 3)
+
+6
+
+
+kasdf
+
+; in: ALKSJDHFLASHDKJF
+;     (ALKSJDHFLASHDKJF)
+;
+; caught STYLE-WARNING:
+;   undefined function: ALKSJDHFLASHDKJF
+;
+; compilation unit finished
+;   Undefined function:
+;     ALKSJDHFLASHDKJF
+;   caught 1 STYLE-WARNING condition
+; Evaluation aborted on #<UNBOUND-VARIABLE KASDF {1003117C43}>.
+CL-USER> (read-from-string "(lamdfasdas asdfasd fs)")
+(LAMDFASDAS ASDFASD FS)
+23
+CL-USER> (eval '(+ 2 3))
+5
+CL-USER> (eval '((+ 2 3)))
+; in: (+ 2 3)
+;     ((+ 2 3))
+;
+; caught ERROR:
+;   illegal function call
+;
+; compilation unit finished
+;   caught 1 ERROR condition
+; Evaluation aborted on #<SB-INT:COMPILED-PROGRAM-ERROR {1003C95293}>.
+CL-USER> (read-from-string "(lamdfasdas asdfasd fs")
+; Evaluation aborted on #<END-OF-FILE {1003E431B3}>.
+CL-USER> ('+ 2 3)
+; in: '+ 2
+;     ('+ 2 3)
+;
+; caught ERROR:
+;   illegal function call
+;
+; compilation unit finished
+;   caught 1 ERROR condition
+; Evaluation aborted on #<SB-INT:COMPILED-PROGRAM-ERROR {100415E523}>.
+CL-USER> (''''''+ 2 3)
+; in: ''''''+ 2
+;     (''''''+ 2 3)
+;
+; caught ERROR:
+;   illegal function call
+;
+; compilation unit finished
+;   caught 1 ERROR condition
+; Evaluation aborted on #<SB-INT:COMPILED-PROGRAM-ERROR {1004337E73}>.
+CL-USER>
+;;; from intro.lisp
+CL-USER> (fset '+ (lambda (a b) (- a b)))
+
+; in: FSET '+
+;     (FSET '+ (LAMBDA (A B) (- A B)))
+;
+; caught STYLE-WARNING:
+;   undefined function: FSET
+;
+; compilation unit finished
+;   Undefined function:
+;     FSET
+;   caught 1 STYLE-WARNING condition
+; Evaluation aborted on #<UNDEFINED-FUNCTION FSET {1004731DD3}>.
+CL-USER>
+;;; from intro.lisp
+CL-USER> (setf (symbol-function '+) (lambda (a b) (- a b)))
+; Evaluation aborted on #<SYMBOL-PACKAGE-LOCKED-ERROR "setting the symbol-function of ~A" {10049BF003}>.
+CL-USER> (+ 2 3)
+-1
+CL-USER> 
