@@ -13,8 +13,8 @@ to."
     ;; if it's a list expression
     ((listp place)
      (case (car place)
-       (car (rplaca (second place) expr))
-       (cdr (rplacd (second place) expr))
+       (car (rplaca (eval (second place)) expr))
+       (cdr (rplacd (eval (second place)) expr))
        (t (error "we don't understand this form!"))))
     ;; if it's a variable
     ((symbolp place)
