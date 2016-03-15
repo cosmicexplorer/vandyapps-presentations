@@ -1,5 +1,6 @@
 #include <iostream>
 
+/* use recursion since mutating variables not possible within constexpr */
 constexpr bool is_prime_helper(size_t n, size_t cur_fac)
 {
   if (cur_fac * cur_fac > n) {
