@@ -40,7 +40,9 @@ int main()
       []() { return 0; }, [](int i) { return i + 1; },
       [](const char * s) { return strlen(s); },
       /* can't be stack<T>! must be concrete type */
-      [](std::stack<int> s) { return s.size(); }, [](auto) { return 34; });
+      [](std::stack<int> s) { return s.size(); },
+      /* can't have multiple "auto" matchers, the standard says no */
+      [](auto) { return 34; });
   std::stack<int> s;
   s.push(3);
   std::vector<int> results;
