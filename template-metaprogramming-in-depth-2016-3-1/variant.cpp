@@ -86,9 +86,9 @@ int main()
   auto overload_v =
       variant_overload<int>([]() { return 0; }, [](int i) { return i + 1; },
                             [](const char * s) { return strlen(s); },
-                            [](auto a) { return a.size(); });
+                            [](auto a) { return 45; });
 
-  boost::variant<int, std::string> v("hello");
+  boost::variant<int, std::string, char> v("hello");
   /* int res = boost::apply_visitor(overload_v, v); */
   int res = boost::apply_visitor(normal_visitor(), v);
   std::cout << res << std::endl;
