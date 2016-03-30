@@ -4,32 +4,34 @@
 #include <stack>
 #include <iostream>
 
-template <typename... Args> struct overload_set : public Args... {
+template <typename... Args>
+struct overload_set : public Args... {
   overload_set(Args... args) : Args(args)...
   {
   }
 };
 
 template <typename... Args>
-inline overload_set<Args...> overload(Args &&... args)
+inline overload_set<Args...> overload(Args... args)
 {
   return overload_set<Args...>(args...);
 }
 
 template <typename T, typename... Args>
-struct variant_overload_set : public boost::variant<T>, Args... {
+struct variant_overload_set : public boost::static_visitor<T>, Args... {
   const overload_set<Args...> over_set;
   variant_overload_set(Args... args) : Args(args)..., over_set(args...)
   {
   }
-  template <typename U> inline T operator()(U val)
+  template <typename... VisitorArgs>
+  inline T operator()(VisitorArgs... args)
   {
-    return static_cast<T>(over_set(val));
+    return static_cast<T>(over_set(args...));
   }
 };
 
 template <typename T, typename... Args>
-inline variant_overload_set<T, Args...> variant_overload(Args &&... args)
+inline variant_overload_set<T, Args...> variant_overload(Args... args)
 {
   return variant_overload_set<T, Args...>(args...);
 }
@@ -51,12 +53,14 @@ struct normal_visitor : public boost::variant<int> {
   }
 
   /* we can do this here, but not with lambdas */
-  template <typename T> int operator()(std::stack<T> s) const
+  template <typename T>
+  int operator()(std::stack<T> s) const
   {
     return s.size();
   }
 
-  template <typename T> int operator()(T) const
+  template <typename T>
+  int operator()(T) const
   {
     return 34;
   }
@@ -80,16 +84,21 @@ int main()
   results.push_back(overloaded_funs("wow"));
   results.push_back(overloaded_funs(s));
 
-  std::for_each(results.begin(), results.end(),
-                [](auto i) { std::cout << i << std::endl; });
+  /* std::for_each(results.begin(), results.end(), */
+  /*               [](auto i) { std::cout << i << std::endl; }); */
 
-  auto overload_v =
-      variant_overload<int>([]() { return 0; }, [](int i) { return i + 1; },
-                            [](const char * s) { return strlen(s); },
-                            [](auto a) { return 45; });
+  auto overload_v = variant_overload<int>([](int i) { return i + 1; },
+                                          [](auto el) { return el.size(); });
+  auto overload_v2 =
+      variant_overload<int>([](int i, std::string s) { return i + s.size(); },
+                            [](auto, auto) { return 3; });
 
-  boost::variant<int, std::string, char> v("hello");
-  /* int res = boost::apply_visitor(overload_v, v); */
-  int res = boost::apply_visitor(normal_visitor(), v);
+  boost::variant<int, std::string> v(std::string("hello world!"));
+  /* boost::variant<int, std::string> v(int(4)); */
+  boost::variant<int, std::string> other(int(2));
+  int res  = boost::apply_visitor(overload_v, v);
+  int res2 = boost::apply_visitor(overload_v2, other, v);
+  /* int res = boost::apply_visitor(normal_visitor(), v); */
   std::cout << res << std::endl;
+  /* std::cout << res2 << std::endl; */
 }
